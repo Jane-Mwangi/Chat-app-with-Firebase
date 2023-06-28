@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:messenger_app/components/my_button.dart';
 import 'package:messenger_app/components/my_text_field.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final void Function()?onTap;
-  const LoginPage({Key? key,required this.onTap}) : super(key: key);
+  const RegisterPage({Key? key,required this.onTap}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
+
   //text conrollers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final ConfirmPasswordController = TextEditingController();
 
-  //sign in User
-  void signIn(){
+  //Sign Up
+  void signUp(){
 
   }
 
@@ -38,8 +40,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 40,),
                 //welcome back message
-                Text(
-                  'Welcome back you\'ve been  missed',
+                const Text(
+                  'Let\'s Create an Account for You!',
                   style: TextStyle(
                     fontSize: 16.0,
                   ),
@@ -54,20 +56,24 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Password',
                     obscureText:true),
                 const SizedBox(height: 10,),
+                MyTextField(controller: ConfirmPasswordController,
+                    hintText: 'Confirm Password',
+                    obscureText:true),
+                const SizedBox(height: 10,),
                 //sign in button
-                MyButton(onTap: signIn, text: 'Sign In',),
+                MyButton(onTap: signUp, text: 'Sign Up',),
                 const SizedBox(height: 20,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Not a member?'),
+                    Text('Already a member?'),
                     const SizedBox(width: 4,),
                     GestureDetector(
                       onTap: widget.onTap,
-                      child: Text('Register Now,',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),),
+                      child: Text('Login Now,',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),),
                     )
                   ],
                 )
