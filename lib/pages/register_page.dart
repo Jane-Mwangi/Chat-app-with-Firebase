@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:messenger_app/components/my_button.dart';
 import 'package:messenger_app/components/my_text_field.dart';
+import 'package:messenger_app/components/services/auth/auth_service.dart';
+import 'package:provider/provider.dart';
+
+import '../components/services/auth/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()?onTap;
@@ -15,10 +19,26 @@ class _RegisterPageState extends State<RegisterPage> {
   //text conrollers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final ConfirmPasswordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   //Sign Up
-  void signUp(){
+  void signUp() async{
+if (passwordController.text != confirmPasswordController.text){
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Passwords do not match"),
+  ),
+  );
+  return;
+}
+
+//get auth service
+  final authService= Provider.of<AuthService>(context,listen: false);
+
+try{
+  await authService.signUpWithEmailAndPassword(emailController.text,passwordController.text,);
+}catch (e) {
+  ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(e.toString()),),);
+}
 
   }
 
@@ -56,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     hintText: 'Password',
                     obscureText:true),
                 const SizedBox(height: 10,),
-                MyTextField(controller: ConfirmPasswordController,
+                MyTextField(controller: confirmPasswordController,
                     hintText: 'Confirm Password',
                     obscureText:true),
                 const SizedBox(height: 10,),
